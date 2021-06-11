@@ -1,0 +1,34 @@
+.footer {
+  background: rgba(0, 0, 0, 0.8);
+  padding-top: 10px;
+  color: aliceblue;
+  margin-top: 50px;
+}
+
+.footer-hr {
+  background: #3fb14e;
+  height: 2px;
+}
+
+.footer-a,
+.footer-p {
+  text-decoration: none;
+  color: #828383;
+}
+
+.footer-a:hover {
+  text-decoration: none;
+  color: #c8d6d6;
+}
+
+.contact {
+  display: flex;
+  margin-bottom: 1px;
+}
+
+.footer-img {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  margin-right: 10px;
+}
