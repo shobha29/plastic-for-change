@@ -6,7 +6,7 @@ import { getProducts } from "../../utils/apiCore";
 import Card from "./card";
 import Search from "./search";
 
-const Home = () => {
+const Home = ({ history }) => {
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState(false);
@@ -48,7 +48,7 @@ const Home = () => {
       <div className="row">
         {productsByArrival.map((product, i) => (
           <div key={i} className="col-3 mb-3">
-            <Card product={product} />
+            <Card history={history} product={product} />
           </div>
         ))}
       </div>
@@ -57,7 +57,7 @@ const Home = () => {
       <div className="row">
         {productsBySell.map((product, i) => (
           <div key={i} className="col-3 mb-3">
-            <Card product={product} />
+            <Card history={history} product={product} />
           </div>
         ))}
       </div>

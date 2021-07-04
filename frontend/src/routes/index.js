@@ -6,9 +6,13 @@ import {
   Signin,
   Signup,
   UserDashboard,
+  Profile,
   AdminDashboard,
   AddCategory,
   AddProduct,
+  Orders,
+  ManageProducts,
+  UpdateProduct,
   Shop,
   SingleProduct,
   Cart,
@@ -26,9 +30,17 @@ const Routes = () => {
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />
         <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
+        <PrivateRoute path="/profile/:userId" exact component={Profile} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
         <AdminRoute path="/create/category" exact component={AddCategory} />
         <AdminRoute path="/create/product" exact component={AddProduct} />
+        <AdminRoute path="/admin/orders" exact component={Orders} />
+        <AdminRoute path="/admin/products" exact component={ManageProducts} />
+        <AdminRoute
+          path="/admin/product/update/:productId"
+          exact
+          component={UpdateProduct}
+        />
         <Route path="/product/:productId" exact component={SingleProduct} />
         <Route path="/cart" exact component={Cart} />
       </Switch>

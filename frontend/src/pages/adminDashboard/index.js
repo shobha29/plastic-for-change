@@ -24,6 +24,16 @@ const AdminDashboard = () => {
               Add Product
             </Link>
           </li>
+          <li className="list-group-item">
+            <Link className="nav-link" to="/admin/orders">
+              View Orders
+            </Link>
+          </li>
+          <li className="list-group-item">
+            <Link className="nav-link" to="/admin/products">
+              Manage Products
+            </Link>
+          </li>
         </ul>
       </div>
     );
@@ -47,6 +57,7 @@ const AdminDashboard = () => {
       title="Dashboard"
       description={`Hello, ${name}`}
       classname="container-fluid"
+      backgroundClassName="dashborad"
     >
       <div className="row">
         <div className="col-3">{adminLinks()}</div>

@@ -3,10 +3,25 @@ import { Link, withRouter } from "react-router-dom";
 
 import { isAuthenticated, signout } from "../../utils/apiAuth";
 
-import { logo } from "../../asserts";
+import {
+  logo,
+  cartInactive,
+  cartActive,
+  enterActive,
+  enterInactive,
+  exitInactive,
+  homeActive,
+  homeInactive,
+  profileActive,
+  profileInactive,
+  shoppingBagActive,
+  shoppingBagInactive,
+  signupActive,
+  signupInactive,
+} from "../../asserts";
 import { itemTotal } from "../../helpers/cartHelpers";
 
-const isAcive = (history, path) => {
+const isActive = (history, path) => {
   if (history.location.pathname === path) {
     return { color: "#ffffff", fontSize: "18px" };
   } else {
@@ -49,19 +64,40 @@ const Menu = (props) => {
       </li>
 
       <li className="nav-item">
-        <Link className="nav-link" to="/" style={isAcive(history, "/")}>
-          Home
+        <Link className="nav-link" to="/">
+          <img
+            className="nav-icon"
+            src={history.location.pathname === "/" ? homeActive : homeInactive}
+            style={{ width: "17px", marginRight: "5px" }}
+          />
+          <span style={isActive(history, "/")}>Home</span>
         </Link>
       </li>
 
       <li className="nav-item">
-        <Link className="nav-link" to="/shop" style={isAcive(history, "/shop")}>
-          Shop
+        <Link className="nav-link" to="/shop">
+          <img
+            className="nav-icon"
+            src={
+              history.location.pathname === "/shop"
+                ? shoppingBagActive
+                : shoppingBagInactive
+            }
+            style={{ width: "17px", marginRight: "5px" }}
+          />
+          <span style={isActive(history, "/shop")}>Shop</span>
         </Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" to="/cart" style={isAcive(history, "/cart")}>
-          Cart
+        <Link className="nav-link" to="/cart">
+          <img
+            className="nav-icon"
+            src={
+              history.location.pathname === "/cart" ? cartActive : cartInactive
+            }
+            style={{ width: "17px", marginRight: "5px" }}
+          />
+          <span style={isActive(history, "/cart")}>Cart</span>
           {itemTotal() !== 0 && (
             <sup>
               <small className="cart-badge">{itemTotal()}</small>
@@ -72,24 +108,34 @@ const Menu = (props) => {
 
       {isAuthenticated() && isAuthenticated().user.role === 0 && (
         <li className="nav-item">
-          <Link
-            className="nav-link"
-            to="/user/dashboard"
-            style={isAcive(history, "/user/dashboard")}
-          >
-            Dashboard
+          <Link className="nav-link" to="/user/dashboard">
+            <img
+              className="nav-icon"
+              src={
+                history.location.pathname === "/user/dashboard"
+                  ? profileActive
+                  : profileInactive
+              }
+              style={{ width: "17px", marginRight: "5px" }}
+            />
+            <span style={isActive(history, "/user/dashboard")}>Dashboard</span>
           </Link>
         </li>
       )}
 
       {isAuthenticated() && isAuthenticated().user.role === 1 && (
         <li className="nav-item">
-          <Link
-            className="nav-link"
-            to="/admin/dashboard"
-            style={isAcive(history, "/admin/dashboard")}
-          >
-            Dashboard
+          <Link className="nav-link" to="/admin/dashboard">
+            <img
+              className="nav-icon"
+              src={
+                history.location.pathname === "/admin/dashboard"
+                  ? profileActive
+                  : profileInactive
+              }
+              style={{ width: "17px", marginRight: "5px" }}
+            />
+            <span style={isActive(history, "/admin/dashboard")}>Dashboard</span>
           </Link>
         </li>
       )}
@@ -97,21 +143,31 @@ const Menu = (props) => {
       {!isAuthenticated() && (
         <Fragment>
           <li className="nav-item">
-            <Link
-              className="nav-link"
-              to="/signin"
-              style={isAcive(history, "/signin")}
-            >
-              Signin
+            <Link className="nav-link" to="/signin">
+              <img
+                className="nav-icon"
+                src={
+                  history.location.pathname === "/signin"
+                    ? enterActive
+                    : enterInactive
+                }
+                style={{ width: "17px", marginRight: "5px" }}
+              />
+              <span style={isActive(history, "/signin")}>Signin</span>
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-              className="nav-link"
-              to="/signup"
-              style={isAcive(history, "/signup")}
-            >
-              Signup
+            <Link className="nav-link" to="/signup">
+              <img
+                className="nav-icon"
+                src={
+                  history.location.pathname === "/signup"
+                    ? signupActive
+                    : signupInactive
+                }
+                style={{ width: "17px", marginRight: "5px" }}
+              />
+              <span style={isActive(history, "/signup")}>Signup</span>
             </Link>
           </li>
         </Fragment>
@@ -128,6 +184,11 @@ const Menu = (props) => {
               })
             }
           >
+            <img
+              className="nav-icon"
+              src={exitInactive}
+              style={{ width: "17px", marginRight: "5px" }}
+            />
             Signout
           </span>
         </li>

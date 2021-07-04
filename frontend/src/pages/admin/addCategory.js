@@ -78,6 +78,7 @@ const AddCategory = () => {
       title="Add a new Category"
       description={`Hello ${user.name}, ready to add a new category?`}
       classname="container"
+      backgroundClassName="addCategory"
     >
       <div className="row">
         <div className="col-md-8 offset-md-2">

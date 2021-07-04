@@ -7,12 +7,12 @@ import { getCart } from "../../helpers/cartHelpers";
 import Card from "../home/card";
 import Checkout from "./checkout";
 
-const Cart = () => {
+const Cart = ({ history }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     setItems(getCart());
-  }, [items]);
+  }, []);
 
   const showItems = (items) => (
     <div>
@@ -21,6 +21,7 @@ const Cart = () => {
       {items.map((product, i) => (
         <Card
           key={i}
+          history={history}
           product={product}
           showAddButton={false}
           cartUpdate={true}
