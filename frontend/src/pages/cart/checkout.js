@@ -10,7 +10,7 @@ import {
 import { isAuthenticated } from "../../utils/apiAuth";
 import { emptyCart } from "../../helpers/cartHelpers";
 
-const Checkout = ({ products }) => {
+const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   const [data, setData] = useState({
     loading: false,
     success: false,
@@ -86,7 +86,7 @@ const Checkout = ({ products }) => {
             createOrder(userId, token, createOrderData)
               .then((response) => {
                 emptyCart(() => {
-                  // setRun(!run); // run useEffect in parent Cart
+                  setRun(!run);
                   console.log("payment success and empty cart");
                   setData({
                     loading: false,

@@ -158,7 +158,7 @@ const Orders = () => {
           })}
         </div>
       </div>
-      {goBack()}
+      {orders.length > 0 && goBack()}
     </Layout>
   );
 };

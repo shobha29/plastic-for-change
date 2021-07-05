@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { Layout } from "../../components";
+import { Layout, Card } from "../../components";
 import { read, listRelated } from "../../utils/apiCore";
-
-import Card from "../home/card";
 
 const SingleProduct = (props) => {
   const [product, setProduct] = useState({});

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
-import { banner2 } from "../../asserts";
 import { Layout } from "../../components";
 import { signin, authenticate, isAuthenticated } from "../../utils/apiAuth";
 

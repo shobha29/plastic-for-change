@@ -207,15 +207,16 @@ const AddProduct = () => {
       classname="container"
       backgroundClassName="addProduct"
     >
+      {goBack()}
       <div className="row">
         <div className="col-md-8 offset-md-2">
           {showLoading()}
           {showSuccess()}
           {showError()}
           {newPostForm()}
-          {goBack()}
         </div>
       </div>
+      {goBack()}
     </Layout>
   );
 };

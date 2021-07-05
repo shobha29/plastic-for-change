@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { Layout } from "../../components";
+import { Layout, Card } from "../../components";
 import { getProducts } from "../../utils/apiCore";
 
-import Card from "./card";
 import Search from "./search";
 
 const Home = ({ history }) => {

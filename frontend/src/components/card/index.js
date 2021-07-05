@@ -3,7 +3,6 @@ import { Link, Redirect, withRouter } from "react-router-dom";
 import moment from "moment";
 
 import { addItem, removeItem, updateItem } from "../../helpers/cartHelpers";
-
 import ShowImage from "./showImage";
 
 const Card = ({
@@ -13,6 +12,8 @@ const Card = ({
   showAddButton = true,
   cartUpdate = false,
   showRemoveProduct = false,
+  setRun = (f) => f,
+  run = undefined,
 }) => {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
@@ -58,7 +59,10 @@ const Card = ({
   const showRemoveProductButton = (showRemoveProduct) =>
     showRemoveProduct && (
       <button
-        onClick={() => removeItem(product._id)}
+        onClick={() => {
+          removeItem(product._id);
+          setRun(!run);
+        }}
         className="btn btn-outline-danger mt-2 mb-2"
       >
         Remove Product
@@ -66,7 +70,6 @@ const Card = ({
     );
 
   const showStock = (product) => {
-    // console.log("showStock>>>>>>", product);
     return product.quantity > product.sold ? (
       <span className="badge badge-success badge-pill">In Stock</span>
     ) : (
@@ -75,6 +78,7 @@ const Card = ({
   };
 
   const handleChange = (productId) => (e) => {
+    setRun(!run);
     setCount(e.target.value < 1 ? 1 : e.target.value);
     if (e.target.value >= 1) {
       updateItem(productId, e.target.value);

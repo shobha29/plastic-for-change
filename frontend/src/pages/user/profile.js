@@ -74,7 +74,9 @@ const Profile = ({ match }) => {
   };
 
   const profileUpdate = (name, email, password, confirmPassword) => (
-    <form>
+    <form className="mb-3" onClick={clickSubmit}>
+      <h2>Profile update</h2>
+
       <div className="form-group">
         <label className="text-muted">Name</label>
         <input
@@ -120,9 +122,7 @@ const Profile = ({ match }) => {
         >{`**Password don\'t match`}</p>
       )}
 
-      <button onClick={clickSubmit} className="btn btn-primary">
-        Submit
-      </button>
+      <button className="btn btn-primary">Submit</button>
     </form>
   );
 
@@ -138,12 +138,16 @@ const Profile = ({ match }) => {
     <Layout
       title="Profile"
       description="Update your profile"
-      classname="container col-md-8 offset-md-2"
+      classname="container"
       backgroundClassName="updateProfile"
     >
-      <h2 className="mb-4">Profile update</h2>
-      {profileUpdate(name, email, password, confirmPassword)}
-      {redirectUser(success)}
+      {goBack()}
+      <div className="row">
+        <div className="col-md-8 offset-md-2">
+          {profileUpdate(name, email, password, confirmPassword)}
+          {redirectUser(success)}
+        </div>
+      </div>
       {goBack()}
     </Layout>
   );

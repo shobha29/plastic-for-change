@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { Layout } from "../../components";
+import { Layout, Card } from "../../components";
 import { getCart } from "../../helpers/cartHelpers";
 
-import Card from "../home/card";
 import Checkout from "./checkout";
 
 const Cart = ({ history }) => {
   const [items, setItems] = useState([]);
+  const [run, setRun] = useState(false);
 
   useEffect(() => {
     setItems(getCart());
-  }, []);
+  }, [run]);
 
   const showItems = (items) => (
     <div>
@@ -26,6 +26,8 @@ const Cart = ({ history }) => {
           showAddButton={false}
           cartUpdate={true}
           showRemoveProduct={true}
+          setRun={setRun}
+          run={run}
         />
       ))}
     </div>
@@ -52,7 +54,7 @@ const Cart = ({ history }) => {
         <div className="col-6">
           <h2>Your cart Summary</h2>
           <hr />
-          <Checkout products={items} />
+          <Checkout products={items} setRun={setRun} run={run} />
         </div>
       </div>
     </Layout>

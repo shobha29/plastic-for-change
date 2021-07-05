@@ -18,9 +18,12 @@ const orderRoutes = require("./routes/order");
 // app
 const app = express();
 
-// db
+// database
+const DB =
+  "mongodb+srv://shobha:shobha1234321@cluster0.l4lqt.mongodb.net/PlasticForChange?retryWrites=true&w=majority";
+
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,

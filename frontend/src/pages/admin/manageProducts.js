@@ -79,7 +79,7 @@ const ManageProducts = () => {
           <br />
         </div>
       </div>
-      {goBack()}
+      {products.length > 5 && goBack()}
     </Layout>
   );
 };
