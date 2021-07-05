@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
-import { banner2 } from "../../asserts";
 import { Layout } from "../../components";
 import { signin, authenticate, isAuthenticated } from "../../utils/apiAuth";
 
 const Signin = () => {
   const [values, setValues] = useState({
-    email: "",
-    password: "",
+    email: "shobha@gmail.com",
+    password: "123@123",
     error: "",
     loading: false,
     redireactToReferrer: false,
@@ -100,7 +99,8 @@ const Signin = () => {
     <Layout
       title="Signin"
       description="Signin to Plastic for Change for Buying and Selling website"
-      classname="container col=md-8 offset-md-2"
+      classname="container col-md-8 offset-md-2"
+      backgroundClassName="signin"
     >
       {showLoading()}
       {showError()}

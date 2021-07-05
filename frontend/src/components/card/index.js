@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import moment from "moment";
 
 import { addItem, removeItem, updateItem } from "../../helpers/cartHelpers";
-
 import ShowImage from "./showImage";
 
 const Card = ({
+  history,
   product,
   showProductButton = true,
   showAddButton = true,
   cartUpdate = false,
   showRemoveProduct = false,
+  setRun = (f) => f,
+  run = undefined,
 }) => {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
@@ -38,16 +40,29 @@ const Card = ({
   };
 
   const showAddToCartButton = (showAddButton) =>
-    showAddButton && (
+    showAddButton &&
+    (product.quantity > product.sold ? (
       <button onClick={addToCart} className="btn btn-outline-warning mt-2 mb-2">
         Add to card
       </button>
-    );
+    ) : (
+      <button
+        onClick={addToCart}
+        className="btn btn-secondary mt-2 mb-2"
+        disabled
+        style={{ opacity: 0.4, cursor: "not-allowed" }}
+      >
+        Add to card
+      </button>
+    ));
 
   const showRemoveProductButton = (showRemoveProduct) =>
     showRemoveProduct && (
       <button
-        onClick={() => removeItem(product._id)}
+        onClick={() => {
+          removeItem(product._id);
+          setRun(!run);
+        }}
         className="btn btn-outline-danger mt-2 mb-2"
       >
         Remove Product
@@ -55,8 +70,7 @@ const Card = ({
     );
 
   const showStock = (product) => {
-    console.log("showStock>>>>>>", product);
-    return product.quantity !== product.sold ? (
+    return product.quantity > product.sold ? (
       <span className="badge badge-success badge-pill">In Stock</span>
     ) : (
       <span className="badge badge-danger badge-pill">Out of Stock</span>
@@ -64,6 +78,7 @@ const Card = ({
   };
 
   const handleChange = (productId) => (e) => {
+    setRun(!run);
     setCount(e.target.value < 1 ? 1 : e.target.value);
     if (e.target.value >= 1) {
       updateItem(productId, e.target.value);
@@ -92,15 +107,21 @@ const Card = ({
   };
 
   return (
-    <div className="card">
+    <div
+      className="card"
+      style={{
+        boxShadow: "2px 2px 10px 1px #10471c",
+      }}
+    >
       <div className="card-header name">{product.name}</div>
       <div className="card-body">
         {shouldRedirect(redirect)}
         <ShowImage item={product} url="product" />
-        <p className="lead mt-2">{`${product.description.substring(
-          0,
-          20
-        )}...`}</p>
+        <p className="lead mt-2">
+          {history.location.pathname === `/product/${product._id}`
+            ? product.description
+            : `${product.description.substring(0, 20)}...`}
+        </p>
         <p className="black-10">{`₹${product.price}`}</p>
         <p className="black-9">
           Category: {product.category && product.category.name}
@@ -123,4 +144,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default withRouter(Card);

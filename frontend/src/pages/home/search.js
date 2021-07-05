@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+import { Card } from "../../components";
 import { getCategories } from "../../utils/apiAdmin";
-import { getProducts, list } from "../../utils/apiCore";
-
-import Card from "./card";
+import { list } from "../../utils/apiCore";
 
 const Search = () => {
   const [data, setData] = useState({

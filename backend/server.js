@@ -12,13 +12,18 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
 const productRoutes = require("./routes/product");
+const braintreeRoutes = require("./routes/braintree");
+const orderRoutes = require("./routes/order");
 
 // app
 const app = express();
 
-// db
+// database
+const DB =
+  "mongodb+srv://shobha:shobha1234321@cluster0.l4lqt.mongodb.net/PlasticForChange?retryWrites=true&w=majority";
+
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -40,6 +45,8 @@ app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
+app.use("/api", braintreeRoutes);
+app.use("/api", orderRoutes);
 
 const port = process.env.PORT || 8000;
 

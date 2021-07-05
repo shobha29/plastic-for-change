@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-import { Layout } from "../../components";
+import { Layout, Card } from "../../components";
 import { getCategories } from "../../utils/apiAdmin";
 import { getFilteredProducts } from "../../utils/apiCore";
-
-import Card from "../home/card";
 
 import Checkbox from "./checkbox";
 import Radiobox from "./radiobox";
 import { prices } from "./fixedPrices";
 
-const Shop = () => {
+const Shop = ({ history }) => {
   const [myFilters, setMyFilters] = useState({
     filters: { category: [], price: [] },
   });
@@ -126,7 +124,7 @@ const Shop = () => {
           <div className="row">
             {filteredResult.map((product, i) => (
               <div key={i} className="col-4 mb-3">
-                <Card product={product} />
+                <Card history={history} product={product} />
               </div>
             ))}
           </div>

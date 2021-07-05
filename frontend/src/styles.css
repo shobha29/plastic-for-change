@@ -25,6 +25,49 @@ body {
   margin-left: 3px;
 }
 
+/**
+* toolkit
+*/
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 /** 
 * single product page 
 */
@@ -88,7 +131,7 @@ body {
   height: 50vh;
   color: #fff;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("./asserts/banner-01.jpg") center/cover fixed no-repeat;
+    url("./asserts/banner/home.jpg") center/cover fixed no-repeat;
   background-size: 150% 100%;
   -webkit-animation: Gradient 15s ease infinite;
   -moz-animation: Gradient 15s ease infinite;
@@ -132,15 +175,77 @@ body {
 }
 
 /** 
-* shop background
+* background
 */
+
+.signin {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/signin.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.signup {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/signup.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
 
 .shop {
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url("./asserts/shopBanner.jpg") center/cover fixed no-repeat;
+    url("./asserts/banner/shop.jpg") center/cover fixed no-repeat;
+  background-size: 100% 100%;
 }
 
-/* .cart {
+.cart {
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url("./asserts/cartBanner.jpg") center/contain fixed no-repeat;
-} */
+    url("./asserts/banner/cart.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.dashborad {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/dashboard.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.addCategory {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/addCategory.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.addProduct {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/addProduct.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.viewOrders {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/viewOrders.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.manageProduct {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/manageProduct.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.updateProduct {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/updateProduct.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.viewProduct {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/viewProduct.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.updateProfile {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./asserts/banner/updateProfile.jpg") center/contain fixed no-repeat;
+  background-size: 100% 100%;
+}

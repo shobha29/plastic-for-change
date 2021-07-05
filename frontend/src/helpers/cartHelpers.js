@@ -47,7 +47,7 @@ export const getCart = () => {
 };
 
 export const updateItem = (productId, count) => {
-  console.log("updateItem>>>>>", count);
+  // console.log("updateItem>>>>>", count);
   let cart = [];
   if (typeof window !== "undefined") {
     if (localStorage.getItem("cart")) {

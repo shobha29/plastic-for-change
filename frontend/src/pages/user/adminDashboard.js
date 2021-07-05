@@ -4,24 +4,34 @@ import { Link } from "react-router-dom";
 import { Layout } from "../../components";
 import { isAuthenticated } from "../../utils/apiAuth";
 
-const UserDashboard = () => {
+const AdminDashboard = () => {
   const {
     user: { _id, name, email, role },
   } = isAuthenticated();
 
-  const userLinks = () => {
+  const adminLinks = () => {
     return (
       <div className="card">
-        <h3 className="card-header">User Links</h3>
+        <h3 className="card-header">Admin Links</h3>
         <ul className="list-group">
           <li className="list-group-item">
-            <Link className="nav-link" to="/card">
-              My Cart
+            <Link className="nav-link" to="/create/category">
+              Create Category
             </Link>
           </li>
           <li className="list-group-item">
-            <Link className="nav-link" to="/profile/update">
-              Update Profile
+            <Link className="nav-link" to="/create/product">
+              Add Product
+            </Link>
+          </li>
+          <li className="list-group-item">
+            <Link className="nav-link" to="/admin/orders">
+              View Orders
+            </Link>
+          </li>
+          <li className="list-group-item">
+            <Link className="nav-link" to="/admin/products">
+              Manage Products
             </Link>
           </li>
         </ul>
@@ -29,7 +39,7 @@ const UserDashboard = () => {
     );
   };
 
-  const userInfo = () => (
+  const adminInfo = () => (
     <div className="card mb-5">
       <h3 className="card-header">User Information</h3>
       <ul className="list-group">
@@ -42,31 +52,20 @@ const UserDashboard = () => {
     </div>
   );
 
-  const purchaseHistory = () => (
-    <div className="card mb-5">
-      <h3 className="card-header">Purchase History</h3>
-      <ul className="list-group">
-        <li className="list-group-item">history</li>
-      </ul>
-    </div>
-  );
-
   return (
     <Layout
       title="Dashboard"
       description={`Hello, ${name}`}
       classname="container-fluid"
+      backgroundClassName="dashborad"
     >
       <div className="row">
-        <div className="col-3">{userLinks()}</div>
+        <div className="col-3">{adminLinks()}</div>
 
-        <div className="col-9">
-          {userInfo()}
-          {purchaseHistory()}
-        </div>
+        <div className="col-9">{adminInfo()}</div>
       </div>
     </Layout>
   );
 };
 
-export default UserDashboard;
+export default AdminDashboard;

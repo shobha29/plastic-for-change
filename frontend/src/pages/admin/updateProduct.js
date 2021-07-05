@@ -1,98 +1,114 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
-import { Layout } from "../../components";
+import Layout from "../../components/layout";
 import { isAuthenticated } from "../../utils/apiAuth";
+import { getProduct, getCategories, updateProduct } from "../../utils/apiAdmin";
 
-import { createProduct, getCategories } from "../../utils/apiAdmin";
-
-const AddProduct = () => {
+const UpdateProduct = ({ match }) => {
   const [values, setValues] = useState({
     name: "",
     description: "",
     price: "",
-    categories: [],
     category: "",
     shipping: "",
     quantity: "",
     photo: "",
     loading: false,
-    error: "",
-    createdProduct: "",
+    error: false,
+    updatedProduct: "",
     redirectToProfile: false,
     formData: "",
   });
+  const [categories, setCategories] = useState([]);
 
   const { user, token } = isAuthenticated();
-
   const {
     name,
     description,
     price,
-    categories,
-    category,
-    shipping,
     quantity,
     loading,
     error,
-    createdProduct,
+    updatedProduct,
     redirectToProfile,
     formData,
   } = values;
 
-  // load Categories and set form data
-
-  const init = () => {
-    getCategories().then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({ ...values, categories: data, formData: new FormData() });
-      }
-    });
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
-
-  const handleChange = (name) => (e) => {
-    const value = name === "photo" ? e.target.files[0] : e.target.value;
-    formData.set(name, value);
-    setValues({ ...values, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setValues({ ...values, error: "", loading: true });
-
-    createProduct(user._id, token, formData).then((data) => {
+  const init = (productId) => {
+    getProduct(productId).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
         setValues({
           ...values,
-          name: "",
-          description: "",
-          price: "",
-          category: "",
-          shipping: "",
-          quantity: "",
-          photo: "",
-          loading: false,
-          error: "",
-          createdProduct: data.name,
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          category: data.category._id,
+          shipping: data.shipping,
+          quantity: data.quantity,
+          formData: new FormData(),
         });
+        initCategories();
       }
     });
   };
 
-  const newPostForm = () => (
-    <form className="mb-3" onSubmit={handleSubmit}>
-      <h4>Post Photo</h4>
+  const initCategories = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setCategories(data);
+      }
+    });
+  };
 
+  useEffect(() => {
+    init(match.params.productId);
+  }, []);
+
+  const handleChange = (name) => (event) => {
+    const value = name === "photo" ? event.target.files[0] : event.target.value;
+    formData.set(name, value);
+    setValues({ ...values, [name]: value });
+  };
+
+  const clickSubmit = (event) => {
+    event.preventDefault();
+    setValues({ ...values, error: "", loading: true });
+
+    updateProduct(match.params.productId, user._id, token, formData).then(
+      (data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          setValues({
+            ...values,
+            name: "",
+            description: "",
+            photo: "",
+            price: "",
+            quantity: "",
+            loading: false,
+            error: false,
+            updatedProduct: data.name,
+          });
+          setTimeout(
+            () => setValues({ ...values, redirectToProfile: true }),
+            1000
+          );
+        }
+      }
+    );
+  };
+
+  const newPostForm = () => (
+    <form className="mb-3" onSubmit={clickSubmit}>
+      <h4>Post Photo</h4>
       <div className="form-group">
-        <label className="btn btn-outline-secondary">
+        <label className="btn btn-secondary">
           <input
             onChange={handleChange("photo")}
             type="file"
@@ -134,13 +150,22 @@ const AddProduct = () => {
       <div className="form-group">
         <label className="text-muted">Category</label>
         <select onChange={handleChange("category")} className="form-control">
-          <option>--Select--</option>
+          <option>Please select</option>
           {categories &&
             categories.map((c, i) => (
               <option key={i} value={c._id}>
                 {c.name}
               </option>
             ))}
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label className="text-muted">Shipping</label>
+        <select onChange={handleChange("shipping")} className="form-control">
+          <option>Please select</option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
         </select>
       </div>
 
@@ -154,16 +179,7 @@ const AddProduct = () => {
         />
       </div>
 
-      <div className="form-group">
-        <label className="text-muted">Shipping</label>
-        <select onChange={handleChange("shipping")} className="form-control">
-          <option>--Select--</option>
-          <option value="0">No</option>
-          <option value="1">Yes</option>
-        </select>
-      </div>
-
-      <button className="btn btn-outline-success">Add Product</button>
+      <button className="btn btn-outline-primary">Update Product</button>
     </form>
   );
 
@@ -176,14 +192,16 @@ const AddProduct = () => {
     </div>
   );
 
-  const showSuccess = () => (
-    <div
-      className="alert alert-info"
-      style={{ display: createdProduct ? "" : "none" }}
-    >
-      <h2>{`${createdProduct} is created`}</h2>
-    </div>
-  );
+  const showSuccess = () => {
+    return (
+      <div
+        className="alert alert-info"
+        style={{ display: updatedProduct ? "" : "none" }}
+      >
+        <h2>{`${updatedProduct}`} is updated!</h2>
+      </div>
+    );
+  };
 
   const showLoading = () =>
     loading && (
@@ -192,20 +210,28 @@ const AddProduct = () => {
       </div>
     );
 
+  const redirectUser = () => {
+    if (redirectToProfile) {
+      if (!error) {
+        return <Redirect to="/admin/products" />;
+      }
+    }
+  };
+
   const goBack = () => (
     <div className="mt-5">
-      <Link to="/admin/dashboard" className="text-warning">
-        Back to Dashboard
+      <Link to="/admin/products" className="text-warning">
+        Back to Products
       </Link>
     </div>
   );
 
   return (
     <Layout
-      title="Add a new Product"
-      description={`Hello ${user.name}, ready to add a new product?`}
+      title="Update the product"
+      description={`G'day ${user.name}, ready to update the product?`}
       classname="container"
-      backgroundClassName="addProduct"
+      backgroundClassName="updateProduct"
     >
       {goBack()}
       <div className="row">
@@ -213,7 +239,8 @@ const AddProduct = () => {
           {showLoading()}
           {showSuccess()}
           {showError()}
-          {newPostForm()}
+          {!updatedProduct && newPostForm()}
+          {redirectUser()}
         </div>
       </div>
       {goBack()}
@@ -221,4 +248,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default UpdateProduct;

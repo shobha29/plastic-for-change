@@ -99,6 +99,7 @@ const Signup = () => {
       title="Signup"
       description="Signup to Plastic for Change for Buying and Selling website"
       classname="container col=md-8 offset-md-2"
+      backgroundClassName="signup"
     >
       {showSuccess()}
       {showError()}
