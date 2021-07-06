@@ -18,6 +18,16 @@ import shoppingBagInactive from "./shoppingBagInactive.png";
 import signupActive from "./signupActive.png";
 import signupInactive from "./signupInactive.png";
 import imageNotFound from "./imageNotFound.png";
+import deliveredActive from "./deliveredActive.png";
+import deliveredInactive from "./deliveredInactive.png";
+import notProcessedActive from "./notProcessedActive.png";
+import notProcessedInactive from "./notProcessedInactive.png";
+import packagedActive from "./packagedActive.png";
+import packagedInactive from "./packagedInactive.png";
+import processingActive from "./processingActive.png";
+import processingInactive from "./processingInactive.png";
+import shippedActive from "./shippedActive.png";
+import shippedInactive from "./shippedInactive.png";
 
 export {
   logo,
@@ -40,4 +50,14 @@ export {
   signupActive,
   signupInactive,
   imageNotFound,
+  deliveredActive,
+  deliveredInactive,
+  notProcessedActive,
+  notProcessedInactive,
+  packagedActive,
+  packagedInactive,
+  processingActive,
+  processingInactive,
+  shippedActive,
+  shippedInactive,
 };

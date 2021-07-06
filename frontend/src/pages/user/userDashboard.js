@@ -6,15 +6,48 @@ import { Layout, ShowImage } from "../../components";
 import { isAuthenticated } from "../../utils/apiAuth";
 import { getPurchaseHistory } from "../../utils/apiUser";
 
+import {
+  deliveredActive,
+  deliveredInactive,
+  notProcessedActive,
+  notProcessedInactive,
+  packagedActive,
+  packagedInactive,
+  processingActive,
+  processingInactive,
+  shippedActive,
+  shippedInactive,
+} from "../../asserts";
+
 const UserDashboard = () => {
   const [history, setHistory] = useState([]);
 
   const progressSteps = [
-    "Not processed",
-    "Processing",
-    "Packaged",
-    "Shipped",
-    "Delivered",
+    {
+      active: notProcessedActive,
+      inactive: notProcessedInactive,
+      step: "Not processed",
+    },
+    {
+      active: processingActive,
+      inactive: processingInactive,
+      step: "Processing",
+    },
+    {
+      active: packagedActive,
+      inactive: packagedInactive,
+      step: "Packaged",
+    },
+    {
+      active: shippedActive,
+      inactive: shippedInactive,
+      step: "Shipped",
+    },
+    {
+      active: deliveredActive,
+      inactive: deliveredInactive,
+      step: "Delivered",
+    },
   ];
 
   const {
@@ -81,83 +114,95 @@ const UserDashboard = () => {
   );
 
   const productStatus = (status) => {
-    if (status === "Not processed") {
-      return <span className="badge badge-secondary badge-pill">{status}</span>;
-    } else if (status === "Processing") {
-      return <span className="badge badge-primary badge-pill">{status}</span>;
-    } else if (status === "Packaged") {
-      return <span className="badge badge-info badge-pill">{status}</span>;
-    } else if (status === "Shipped") {
-      return <span className="badge badge-warning badge-pill">{status}</span>;
-    } else if (status === "Delivered") {
-      return <span className="badge badge-success badge-pill">{status}</span>;
-    } else {
-      return <span className="badge badge-danger badge-pill">{status}</span>;
+    let badge;
+
+    switch (status) {
+      case "Not processed":
+        badge = "badge badge-secondary badge-pill";
+        break;
+      case "Processing":
+        badge = "badge badge-primary badge-pill";
+        break;
+      case "Packaged":
+        badge = "badge badge-info badge-pill";
+        break;
+      case "Shipped":
+        badge = "badge badge-warning badge-pill";
+        break;
+      case "Delivered":
+        badge = "badge badge-success badge-pill";
+        break;
+      case "Cancelled":
+        badge = "badge badge-danger badge-pill";
+        break;
     }
+
+    return <span className={badge}>{status}</span>;
   };
 
   const trackOrder = (status) => {
-    let progressbarColor;
     let percentage;
-    let circleColor;
     let index;
 
-    if (status === "Not processed") {
-      progressbarColor = "progress-bar";
-      percentage = "0%";
-      circleColor = "bg-secondary";
-      index = 0;
-    } else if (status === "Processing") {
-      progressbarColor = "progress-bar bg-primary";
-      percentage = "25%";
-      circleColor = "bg-primary";
-      index = 1;
-    } else if (status === "Packaged") {
-      progressbarColor = "progress-bar bg-info";
-      percentage = "50%";
-      circleColor = "bg-info";
-      index = 2;
-    } else if (status === "Shipped") {
-      progressbarColor = "progress-bar bg-warning";
-      percentage = "75%";
-      circleColor = "bg-warning";
-      index = 3;
-    } else if (status === "Delivered") {
-      progressbarColor = "progress-bar bg-success";
-      percentage = "100%";
-      circleColor = "bg-success";
-      index = 4;
+    switch (status) {
+      case "Not processed":
+        percentage = "0%";
+        index = 0;
+        break;
+      case "Processing":
+        percentage = "25%";
+        index = 1;
+        break;
+      case "Packaged":
+        percentage = "50%";
+        index = 2;
+        break;
+      case "Shipped":
+        percentage = "75%";
+        index = 3;
+        break;
+      case "Delivered":
+        percentage = "100%";
+        index = 4;
+        break;
     }
 
     return (
       <>
         <p className="font-weight-bold">Track Order</p>
         <div className="position-relative">
-          <div className="progress mb-4" style={{ height: "5px" }}>
+          <div className="progress mb-4" style={{ height: "2px" }}>
             <div
-              className={progressbarColor}
+              className="progress-bar"
               role="progressbar"
               style={{ width: percentage }}
-            ></div>
+            />
             <div
               className="position-absolute d-flex justify-content-between"
-              style={{ top: -5, width: "100%" }}
+              style={{ top: -6, width: "100%" }}
             >
-              {progressSteps.map((step, i) => (
-                <div
-                  key={i}
-                  className={index >= i ? circleColor : "bg-secondary"}
-                  style={{
-                    width: "15px",
-                    height: "15px",
-                    border: "2px solid white",
-                    borderRadius: "10px",
-                    background: "black",
-                  }}
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title={step}
-                />
+              {progressSteps.map((s, i) => (
+                <div data-toggle="tooltip" data-placement="top" title={s.step}>
+                  <div
+                    key={i}
+                    className={index >= i ? "bg-primary" : "bg-secondary"}
+                    style={{
+                      width: "15px",
+                      height: "15px",
+                      border: "2px solid white",
+                      borderRadius: "10px",
+                      background: "black",
+                    }}
+                  />
+                  <img
+                    key={i}
+                    src={index >= i ? s.active : s.inactive}
+                    style={{
+                      width: "15px",
+                      height: "15px",
+                    }}
+                  />
+                </div>
               ))}
             </div>
           </div>
