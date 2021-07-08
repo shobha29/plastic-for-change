@@ -243,7 +243,6 @@ const UpdateProduct = ({ match }) => {
           {redirectUser()}
         </div>
       </div>
-      {goBack()}
     </Layout>
   );
 };

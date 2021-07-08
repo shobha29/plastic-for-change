@@ -49,7 +49,7 @@ export const signout = (next) => {
       method: "GET",
     })
       .then((res) => {
-        console.log("signout", res);
+        // console.log("signout", res);
       })
       .catch((err) => console.log(err));
   }

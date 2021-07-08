@@ -134,9 +134,7 @@ export default function index() {
             />
             <div className="contact">
               <img src={location} className="footer-img" />
-              {/* <div> */}
               <p className="footer-p">SRMS CET</p>
-              {/* </div> */}
             </div>
 
             <div className="contact">

@@ -182,9 +182,13 @@ const UserDashboard = () => {
               style={{ top: -6, width: "100%" }}
             >
               {progressSteps.map((s, i) => (
-                <div data-toggle="tooltip" data-placement="top" title={s.step}>
+                <div
+                  key={i}
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title={s.step}
+                >
                   <div
-                    key={i}
                     className={index >= i ? "bg-primary" : "bg-secondary"}
                     style={{
                       width: "15px",
@@ -195,7 +199,6 @@ const UserDashboard = () => {
                     }}
                   />
                   <img
-                    key={i}
                     src={index >= i ? s.active : s.inactive}
                     style={{
                       width: "15px",

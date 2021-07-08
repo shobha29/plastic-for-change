@@ -216,7 +216,6 @@ const AddProduct = () => {
           {newPostForm()}
         </div>
       </div>
-      {goBack()}
     </Layout>
   );
 };

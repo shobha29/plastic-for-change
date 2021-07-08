@@ -70,7 +70,7 @@ const ForgotPassword = ({ showForgotPassword, setShowForgotPassword }) => {
             <p className="text-success">
               An email has been sent to{" "}
               <span className="font-weight-bold">
-                {email.substr(0, 2)}********
+                {email.substr(0, 2)}***
                 {email.split("@")[0].substr(-2)}@{email.split("@").pop()}
               </span>{" "}
               email address. Follow the instruction in the email to reset your

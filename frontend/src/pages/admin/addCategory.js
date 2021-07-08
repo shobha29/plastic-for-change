@@ -80,6 +80,7 @@ const AddCategory = () => {
       classname="container"
       backgroundClassName="addCategory"
     >
+      {goBack()}
       <div className="row">
         <div className="col-md-8 offset-md-2">
           {showSuccess()}
@@ -87,7 +88,6 @@ const AddCategory = () => {
           {newCategoryForm()}
         </div>
       </div>
-      {goBack()}
     </Layout>
   );
 };
