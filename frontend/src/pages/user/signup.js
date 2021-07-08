@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Layout } from "../../components";
 import { signup } from "../../utils/apiAuth";
 
+import { EMAIL_REGEX, PASSWORD_LENGTH } from "../../constants";
+
 const Signup = () => {
   const [values, setValues] = useState({
     name: "",
@@ -12,30 +14,67 @@ const Signup = () => {
     error: "",
     success: false,
   });
+  const [frontEndError, setFrontEndError] = useState({
+    isError: false,
+    message: "",
+  });
 
   const { name, email, password, error, success } = values;
 
   const handleChange = (name) => (e) => {
+    setFrontEndError({ isError: false, message: "" });
     setValues({ ...values, error: false, [name]: e.target.value });
+  };
+
+  const validateEmail = (input) => {
+    if (input.match(EMAIL_REGEX)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const validateChecks = () => {
+    if (email === "" || password === "") {
+      setFrontEndError({ isError: true, message: "All fields are required." });
+      return false;
+    } else {
+      if (validateEmail(email)) {
+        if (password.length < PASSWORD_LENGTH) {
+          setFrontEndError({
+            isError: true,
+            message: "Password must be of at least 6 characters.",
+          });
+          return false;
+        }
+      } else {
+        setFrontEndError({ isError: true, message: "Invalid email address." });
+        return false;
+      }
+    }
+    return true;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setValues({ ...values, error: false });
-    signup({ name, email, password }).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error, success: false });
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          email: "",
-          password: "",
-          error: "",
-          success: true,
-        });
-      }
-    });
+    setFrontEndError({ isError: false, message: "" });
+    if (validateChecks()) {
+      setValues({ ...values, error: false });
+      signup({ name, email, password }).then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, success: false });
+        } else {
+          setValues({
+            ...values,
+            name: "",
+            email: "",
+            password: "",
+            error: "",
+            success: true,
+          });
+        }
+      });
+    }
   };
 
   const signUpForm = () => (
@@ -68,6 +107,11 @@ const Signup = () => {
           className="form-control"
           value={password}
         />
+        {frontEndError.isError && (
+          <p className="text-danger font-weight-bold">
+            **{frontEndError.message}
+          </p>
+        )}
       </div>
 
       <button onClick={handleSubmit} className="btn btn-success">

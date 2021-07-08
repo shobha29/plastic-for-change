@@ -3,42 +3,83 @@ import { Redirect } from "react-router-dom";
 
 import { Layout } from "../../components";
 import { signin, authenticate, isAuthenticated } from "../../utils/apiAuth";
+import { EMAIL_REGEX, PASSWORD_LENGTH } from "../../constants";
+
+import ForgotPassword from "./forgotPassword";
 
 const Signin = () => {
   const [values, setValues] = useState({
-    email: "shobha@gmail.com",
-    password: "123@123",
+    email: "",
+    password: "",
     error: "",
     loading: false,
     redireactToReferrer: false,
+  });
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [frontEndError, setFrontEndError] = useState({
+    isError: false,
+    message: "",
   });
 
   const { email, password, error, loading, redireactToReferrer } = values;
   const { user } = isAuthenticated();
 
   const handleChange = (name) => (e) => {
+    setFrontEndError({ isError: false, message: "" });
     setValues({ ...values, error: false, [name]: e.target.value });
+  };
+
+  const validateEmail = (input) => {
+    if (input.match(EMAIL_REGEX)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const validateChecks = () => {
+    if (email === "" || password === "") {
+      setFrontEndError({ isError: true, message: "All fields are required." });
+      return false;
+    } else {
+      if (validateEmail(email)) {
+        if (password.length < PASSWORD_LENGTH) {
+          setFrontEndError({
+            isError: true,
+            message: "Password must be of at least 6 characters.",
+          });
+          return false;
+        }
+      } else {
+        setFrontEndError({ isError: true, message: "Invalid email address." });
+        return false;
+      }
+    }
+    return true;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setValues({ ...values, error: false, loading: true });
-    signin({ email, password }).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error, loading: false });
-      } else {
-        authenticate(data, () => {
-          setValues({
-            ...values,
-            redireactToReferrer: true,
+    setFrontEndError({ isError: false, message: "" });
+    if (validateChecks()) {
+      setValues({ ...values, error: false, loading: true });
+      signin({ email, password }).then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, loading: false });
+        } else {
+          authenticate(data, () => {
+            setValues({
+              ...values,
+              redireactToReferrer: true,
+            });
           });
-        });
-      }
-    });
+        }
+      });
+    }
   };
 
   const signinForm = () => (
-    <form>
+    <form className="d-flex flex-column">
       <div className="form-group">
         <label className="text-muted">Email</label>
         <input
@@ -57,9 +98,24 @@ const Signin = () => {
           className="form-control"
           value={password}
         />
+        {frontEndError.isError && (
+          <p className="text-danger font-weight-bold">
+            **{frontEndError.message}
+          </p>
+        )}
       </div>
+      <p
+        className="align-self-end text-primary font-weight-bold"
+        style={{ cursor: "pointer" }}
+        onClick={() => setShowForgotPassword(true)}
+      >
+        Forgot password?
+      </p>
 
-      <button onClick={handleSubmit} className="btn btn-success">
+      <button
+        onClick={handleSubmit}
+        className="btn btn-success align-self-start"
+      >
         Signin
       </button>
     </form>
@@ -102,6 +158,10 @@ const Signin = () => {
       classname="container col-md-8 offset-md-2"
       backgroundClassName="signin"
     >
+      <ForgotPassword
+        showForgotPassword={showForgotPassword}
+        setShowForgotPassword={setShowForgotPassword}
+      />
       {showLoading()}
       {showError()}
       {signinForm()}

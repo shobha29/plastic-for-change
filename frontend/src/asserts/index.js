@@ -28,6 +28,7 @@ import processingActive from "./processingActive.png";
 import processingInactive from "./processingInactive.png";
 import shippedActive from "./shippedActive.png";
 import shippedInactive from "./shippedInactive.png";
+import checkmark from "./checkmark.png";
 
 export {
   logo,
@@ -60,4 +61,5 @@ export {
   processingInactive,
   shippedActive,
   shippedInactive,
+  checkmark,
 };
