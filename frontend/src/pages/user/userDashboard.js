@@ -19,8 +19,8 @@ import {
   shippedInactive,
 } from "../../asserts";
 
-const UserDashboard = () => {
-  const [history, setHistory] = useState([]);
+const UserDashboard = ({ history }) => {
+  const [historyData, setHistoryData] = useState([]);
 
   const progressSteps = [
     {
@@ -71,7 +71,7 @@ const UserDashboard = () => {
             purchaseHistory.push(product);
           });
         });
-        setHistory(purchaseHistory.reverse());
+        setHistoryData(purchaseHistory.reverse());
       }
     });
   };
@@ -214,13 +214,13 @@ const UserDashboard = () => {
     );
   };
 
-  const purchaseHistory = (history) => {
+  const purchaseHistory = (historyData) => {
     return (
       <div className="card mb-5">
         <h3 className="card-header">Purchase history</h3>
-        {history.length ? (
+        {historyData.length ? (
           <div className="d-flex flex-wrap">
-            {history.map((item, i) => {
+            {historyData.map((item, i) => {
               return (
                 <div
                   key={i}
@@ -230,7 +230,12 @@ const UserDashboard = () => {
                   }}
                 >
                   {productStatus(item.status)}
-                  <ShowImage item={item} url="product" />
+                  <ShowImage
+                    item={item}
+                    url="product"
+                    history={history}
+                    productId={item._id}
+                  />
                   <h6>Product name: {item.name}</h6>
                   <h6>Product price: ₹{item.price}</h6>
                   <h6>
@@ -263,7 +268,7 @@ const UserDashboard = () => {
 
         <div className="col-9">
           {userInfo()}
-          {purchaseHistory(history)}
+          {purchaseHistory(historyData)}
         </div>
       </div>
     </Layout>

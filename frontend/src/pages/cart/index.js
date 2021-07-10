@@ -18,18 +18,21 @@ const Cart = ({ history }) => {
     <div>
       <h2>{`Your cart has ${items.length} items`}</h2>
       <hr />
-      {items.map((product, i) => (
-        <Card
-          key={i}
-          history={history}
-          product={product}
-          showAddButton={false}
-          cartUpdate={true}
-          showRemoveProduct={true}
-          setRun={setRun}
-          run={run}
-        />
-      ))}
+      <div className="row">
+        {items.map((product, i) => (
+          <div className="col-6 mb-4" key={i}>
+            <Card
+              history={history}
+              product={product}
+              showAddButton={false}
+              cartUpdate={true}
+              showRemoveProduct={true}
+              setRun={setRun}
+              run={run}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 

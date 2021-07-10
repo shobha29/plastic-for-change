@@ -77,11 +77,18 @@ const Card = ({
     );
   };
 
-  const handleChange = (productId) => (e) => {
+  const handleChange = (productId, productQuantity) => (e) => {
+    const value =
+      e.target.value < 1
+        ? 1
+        : e.target.value > productQuantity
+        ? productQuantity
+        : e.target.value;
+
     setRun(!run);
-    setCount(e.target.value < 1 ? 1 : e.target.value);
+    setCount(value);
     if (e.target.value >= 1) {
-      updateItem(productId, e.target.value);
+      updateItem(productId, value);
     }
   };
 
@@ -98,7 +105,7 @@ const Card = ({
               type="number"
               className="form-control"
               value={count}
-              onChange={handleChange(product._id)}
+              onChange={handleChange(product._id, product.quantity)}
             />
           </div>
         </div>
@@ -116,7 +123,14 @@ const Card = ({
       <div className="card-header name">{product.name}</div>
       <div className="card-body">
         {shouldRedirect(redirect)}
-        <ShowImage item={product} url="product" />
+        <div>
+          <ShowImage
+            item={product}
+            url="product"
+            history={history}
+            productId={product._id}
+          />
+        </div>
         <p className="lead mt-2">
           {history.location.pathname === `/product/${product._id}`
             ? product.description
