@@ -13,7 +13,7 @@ const ShowImage = ({ item, url, history, productId }) => {
         style={
           isSamePath
             ? { width: "100%", height: "100%" }
-            : { width: "250px", height: "250px" }
+            : { width: "100%", height: "15rem" }
         }
       />
     </div>

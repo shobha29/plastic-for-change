@@ -43,7 +43,7 @@ const Card = ({
     showAddButton &&
     (product.quantity > product.sold ? (
       <button onClick={addToCart} className="btn btn-outline-warning mt-2 mb-2">
-        Add to card
+        Add to cart
       </button>
     ) : (
       <button
@@ -52,7 +52,7 @@ const Card = ({
         disabled
         style={{ opacity: 0.4, cursor: "not-allowed" }}
       >
-        Add to card
+        Add to cart
       </button>
     ));
 
