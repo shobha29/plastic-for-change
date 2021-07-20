@@ -43,11 +43,9 @@ const Orders = () => {
 
   const showOrdersLength = () => {
     if (orders.length > 0) {
-      return (
-        <h1 className="text-danger display-2">Total orders: {orders.length}</h1>
-      );
+      return <h3 className="text-danger">Total orders: {orders.length}</h3>;
     } else {
-      return <h1 className="text-danger">No orders</h1>;
+      return <h3 className="text-danger">No orders</h3>;
     }
   };
 
@@ -73,7 +71,7 @@ const Orders = () => {
 
   const showStatus = (o) => (
     <div className="form-group">
-      <h3 className="mark mb-4">Status: {o.status}</h3>
+      <h4 className="mark mb-4">Status: {o.status}</h4>
       <select
         className="form-control"
         onChange={(e) => handleStatusChange(e, o._id)}
@@ -115,9 +113,9 @@ const Orders = () => {
                 key={oIndex}
                 style={{ borderBottom: "5px solid indigo" }}
               >
-                <h2 className="mb-5">
+                <h5 className="mb-5">
                   <span className="bg-primary">Order ID: {o._id}</span>
-                </h2>
+                </h5>
 
                 <ul className="list-group mb-2">
                   <li className="list-group-item">{showStatus(o)}</li>

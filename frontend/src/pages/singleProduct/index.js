@@ -44,7 +44,7 @@ const SingleProduct = (props) => {
       backgroundClassName="viewProduct"
     >
       <div className="row">
-        <div className="col-8">
+        <div className="col-lg-6 col-sm-12 mb-4">
           {product && product.description && (
             <Card
               history={history}
@@ -53,13 +53,15 @@ const SingleProduct = (props) => {
             />
           )}
         </div>
-        <div className="col-4">
+        <div className="col-lg-6 col-sm-12">
           <h4>Related Products</h4>
-          {relatedProducts.map((product, i) => (
-            <div key={i} className="mb-3">
-              <Card history={history} product={product} />
-            </div>
-          ))}
+          <div className="row">
+            {relatedProducts.map((product, i) => (
+              <div key={i} className="col-lg-6 col-md-6 col-sm-12 mb-3">
+                <Card history={history} product={product} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </Layout>
