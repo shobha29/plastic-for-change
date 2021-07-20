@@ -33,7 +33,7 @@ const Menu = (props) => {
   const { history } = props;
   return (
     <ul
-      className="nav nav-tabs bg-success"
+      className="nav nav-tabs sticky-top bg-success"
       style={{
         display: "flex",
         alignItems: "center",

@@ -102,7 +102,7 @@ const Shop = ({ history }) => {
       backgroundClassName="shop"
     >
       <div className="row">
-        <div className="col-4">
+        <div className="col-lg-4 col-sm-12 mb-5">
           <h4>Filter by Categories</h4>
           <ul>
             <Checkbox
@@ -119,11 +119,12 @@ const Shop = ({ history }) => {
             />
           </div>
         </div>
-        <div className="col-8">
+
+        <div className="col-lg-8 col-sm-12">
           <h2 className="mb-4">Products</h2>
           <div className="row">
             {filteredResult.map((product, i) => (
-              <div key={i} className="col-4 mb-3">
+              <div key={i} className="col-lg-4 col-sm-12 col-md-6 mb-3">
                 <Card history={history} product={product} />
               </div>
             ))}

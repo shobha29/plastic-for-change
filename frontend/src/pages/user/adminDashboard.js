@@ -60,9 +60,9 @@ const AdminDashboard = () => {
       backgroundClassName="dashborad"
     >
       <div className="row">
-        <div className="col-3">{adminLinks()}</div>
+        <div className="col-lg-3 col-md-6 col-sm-12 mb-5">{adminLinks()}</div>
 
-        <div className="col-9">{adminInfo()}</div>
+        <div className="col-lg-9 col-md-6 col-sm-12">{adminInfo()}</div>
       </div>
     </Layout>
   );

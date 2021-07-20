@@ -224,7 +224,7 @@ const UserDashboard = ({ history }) => {
               return (
                 <div
                   key={i}
-                  className="m-5  p-2"
+                  className="m-5 p-2"
                   style={{
                     boxShadow: "2px 2px 10px 1px #9E9E9E",
                   }}
@@ -264,9 +264,9 @@ const UserDashboard = ({ history }) => {
       backgroundClassName="dashborad"
     >
       <div className="row">
-        <div className="col-3">{userLinks()}</div>
+        <div className="col-lg-3 col-md-12 col-sm-12 mb-5">{userLinks()}</div>
 
-        <div className="col-9">
+        <div className="col-lg-9 col-md-12 col-sm-12">
           {userInfo()}
           {purchaseHistory(historyData)}
         </div>

@@ -20,7 +20,7 @@ const Cart = ({ history }) => {
       <hr />
       <div className="row">
         {items.map((product, i) => (
-          <div className="col-6 mb-4" key={i}>
+          <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={i}>
             <Card
               history={history}
               product={product}
@@ -50,11 +50,11 @@ const Cart = ({ history }) => {
       backgroundClassName="cart"
     >
       <div className="row">
-        <div className="col-6">
+        <div className="col-lg-9 col-sm-12 mb-5">
           {items.length > 0 ? showItems(items) : noItemsMessage()}
         </div>
 
-        <div className="col-6">
+        <div className="col-lg-3 col-md-12 col-sm-12">
           <h2>Your cart Summary</h2>
           <hr />
           <Checkout products={items} setRun={setRun} run={run} />
